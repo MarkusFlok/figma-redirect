@@ -18,10 +18,10 @@
                 // Open the Figma link in a new tab
                 const newTab = window.open(decodedLink, '_blank');
                 if (newTab) {
+                    // After opening the new tab, attempt to close the current window
                     setTimeout(function() {
-                        // Close the current window after 1 second
-                        window.close();
-                    }, 1000); // Delay the closing by 1 second
+                        window.close(); // This will now work if the page was opened with window.open()
+                    }, 1000); // Delay to ensure redirection happens before closing the window
                 }
             } else {
                 // Fallback for the web version of the Figma design
