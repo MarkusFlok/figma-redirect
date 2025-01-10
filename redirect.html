@@ -5,35 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting to Figma...</title>
     <script>
-        // Get the figmaLink query parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const figmaLink = urlParams.get('figmaLink');
+        // Function to handle the redirect and open the popup
+        function openFigmaPopup() {
+            // Get the figmaLink query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const figmaLink = urlParams.get('figmaLink');
 
-        if (figmaLink) {
-            // Decode the figmaLink
-            const decodedLink = decodeURIComponent(figmaLink);
+            if (figmaLink) {
+                // Decode the figmaLink
+                const decodedLink = decodeURIComponent(figmaLink);
 
-            // If the link starts with figma://, attempt to open the app in a popup
-            if (decodedLink.startsWith('figma://')) {
-                // Open the Figma link in a small popup
-                const popup = window.open(decodedLink, 'figmaAppPopup', 'width=600,height=400');
-                
-                if (popup) {
-                    // After 3 seconds, attempt to close the popup window
-                    setTimeout(function() {
-                        popup.close(); // Close the popup after the delay
-                    }, 3000); // Delay to allow time for the Figma link to load
+                // If the link starts with figma://, attempt to open the app in a popup
+                if (decodedLink.startsWith('figma://')) {
+                    // Open the Figma link in a small popup
+                    const popup = window.open(decodedLink, 'figmaAppPopup', 'width=600,height=400');
+                    
+                    if (popup) {
+                        // After 3 seconds, attempt to close the popup window
+                        setTimeout(function() {
+                            popup.close(); // Close the popup after the delay
+                        }, 3000); // Delay to allow time for the Figma link to load
+                    }
+                } else {
+                    // Fallback for the web version of the Figma design
+                    window.location.href = decodedLink.replace('figma://', 'https://www.figma.com/');
                 }
             } else {
-                // Fallback for the web version of the Figma design
-                window.location.href = decodedLink.replace('figma://', 'https://www.figma.com/');
+                document.body.innerHTML = "<p>Invalid Figma link. Please check the URL.</p>";
             }
-        } else {
-            document.body.innerHTML = "<p>Invalid Figma link. Please check the URL.</p>";
         }
     </script>
 </head>
 <body>
     <p>Redirecting to Figma...</p>
+    <!-- Button to trigger popup -->
+    <button onclick="openFigmaPopup()">Open Figma App</button>
 </body>
 </html>
