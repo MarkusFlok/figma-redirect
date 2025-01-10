@@ -5,20 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting to Figma...</title>
     <script>
+        // Get the figmaLink query parameter
         const urlParams = new URLSearchParams(window.location.search);
         const figmaLink = urlParams.get('figmaLink');
 
         if (figmaLink) {
-            // Try to open the Figma app (figma:// protocol)
-            const figmaAppLink = decodeURIComponent(figmaLink);
-
-            // Redirect to the Figma app link
-            window.location = figmaAppLink;
-
-            // Fallback to the web version after a short delay in case the app isn't installed
-            setTimeout(function() {
-                window.location = "https://www.figma.com" + figmaAppLink.slice(17); // remove 'figma://' and add to https://www.figma.com
-            }, 1000); // 1 second delay
+            // If the link starts with figma://, open the app
+            if (figmaLink.startsWith('figma://')) {
+                window.location.href = decodeURIComponent(figmaLink);
+            } else {
+                // Fallback for the web version of the Figma design
+                window.location.href = decodeURIComponent(figmaLink).replace('figma://', 'https://www.figma.com/');
+            }
         } else {
             document.body.innerHTML = "<p>Invalid Figma link. Please check the URL.</p>";
         }
