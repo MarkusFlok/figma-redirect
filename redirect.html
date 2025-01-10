@@ -4,21 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting to Figma...</title>
+    <style>
+        /* Make the clickable area full-screen */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        /* Fullscreen clickable area */
+        .clickable-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
     <script>
         window.onload = function() {
-            // Open the Figma link in a popup as soon as the page loads
+            // Get the Figma link from URL parameters
             const urlParams = new URLSearchParams(window.location.search);
             const figmaLink = urlParams.get('figmaLink');
 
             if (figmaLink) {
-                // Decode the figmaLink
+                // Decode the Figma link
                 const decodedLink = decodeURIComponent(figmaLink);
 
-                // If the link starts with figma://, attempt to open the app in a popup
+                // If the link starts with figma://, attempt to open the app
                 if (decodedLink.startsWith('figma://')) {
                     // Open the Figma link in a small popup window
                     const popup = window.open(decodedLink, 'figmaAppPopup', 'width=600,height=400');
-                    
+
                     if (popup) {
                         // After 3 seconds, automatically close the popup window
                         setTimeout(function() {
@@ -32,10 +61,18 @@
             } else {
                 document.body.innerHTML = "<p>Invalid Figma link. Please check the URL.</p>";
             }
+
+            // Close the tab when the user clicks on the full-screen area
+            document.getElementById('clickable-area').addEventListener('click', function() {
+                window.close();
+            });
         };
     </script>
 </head>
 <body>
-    <p>Redirecting to Figma...</p>
+    <!-- Full-screen clickable area -->
+    <div id="clickable-area" class="clickable-area">
+        <p>Click anywhere to close this tab...</p>
+    </div>
 </body>
 </html>
