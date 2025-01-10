@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting to Figma...</title>
     <script>
-        // Function to handle the redirect and open the popup
-        function openFigmaPopup() {
-            // Get the figmaLink query parameter
+        window.onload = function() {
+            // Open the Figma link in a popup as soon as the page loads
             const urlParams = new URLSearchParams(window.location.search);
             const figmaLink = urlParams.get('figmaLink');
 
@@ -17,14 +16,14 @@
 
                 // If the link starts with figma://, attempt to open the app in a popup
                 if (decodedLink.startsWith('figma://')) {
-                    // Open the Figma link in a small popup
+                    // Open the Figma link in a small popup window
                     const popup = window.open(decodedLink, 'figmaAppPopup', 'width=600,height=400');
                     
                     if (popup) {
-                        // After 3 seconds, attempt to close the popup window
+                        // After 3 seconds, automatically close the popup window
                         setTimeout(function() {
                             popup.close(); // Close the popup after the delay
-                        }, 3000); // Delay to allow time for the Figma link to load
+                        }, 3000); // 3 seconds delay
                     }
                 } else {
                     // Fallback for the web version of the Figma design
@@ -33,13 +32,10 @@
             } else {
                 document.body.innerHTML = "<p>Invalid Figma link. Please check the URL.</p>";
             }
-        }
+        };
     </script>
 </head>
 <body>
-    <p>Redirecting to Figdfbfdfdbma...</p>
-    <p>Redirecting to Figdfbma...</p>
-    <!-- Button to trigger popup -->
-    <button onclick="openFigmaPopup()">Open Figma App</button>
+    <p>Redirecting to Figma...</p>
 </body>
 </html>
