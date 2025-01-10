@@ -13,15 +13,16 @@
             // Decode the figmaLink
             const decodedLink = decodeURIComponent(figmaLink);
 
-            // If the link starts with figma://, attempt to open the app
+            // If the link starts with figma://, attempt to open the app in a popup
             if (decodedLink.startsWith('figma://')) {
-                // Open the Figma link in a new tab
-                const newTab = window.open(decodedLink, '_blank');
-                if (newTab) {
-                    // After opening the new tab, attempt to close the current window after 3 seconds
+                // Open the Figma link in a small popup
+                const popup = window.open(decodedLink, 'figmaAppPopup', 'width=600,height=400');
+                
+                if (popup) {
+                    // After 3 seconds, attempt to close the popup window
                     setTimeout(function() {
-                        window.close(); // This will now work if the page was opened with window.open()
-                    }, 3000); // Delay to ensure the redirection happens before closing the window
+                        popup.close(); // Close the popup after the delay
+                    }, 3000); // Delay to allow time for the Figma link to load
                 }
             } else {
                 // Fallback for the web version of the Figma design
