@@ -12,17 +12,26 @@
         if (figmaLink) {
             // Decode the figmaLink
             const decodedLink = decodeURIComponent(figmaLink);
+            
+            // Debugging: log the received link
+            console.log("Received Figma Link:", decodedLink);
 
-            // If the link starts with figma://, attempt to open the app
+            // Check if the link starts with figma:// and try to redirect to the Figma app
             if (decodedLink.startsWith('figma://')) {
+                console.log("Detected figma:// protocol. Redirecting to Figma app...");
+                
+                // Add a small delay before redirecting (to help with browser handling)
                 setTimeout(function() {
                     window.location.href = decodedLink;
-                }, 1000); // Delay the redirection by 1 second
+                }, 1000); // 1-second delay
             } else {
-                // Fallback for the web version of the Figma design
+                // Debugging: log when not using the figma:// protocol
+                console.log("This is a web link. Redirecting to Figma website...");
                 window.location.href = decodedLink.replace('figma://', 'https://www.figma.com/');
             }
         } else {
+            // Log when the link parameter is missing
+            console.log("No Figma link provided in the URL.");
             document.body.innerHTML = "<p>Invalid Figma link. Please check the URL.</p>";
         }
     </script>
