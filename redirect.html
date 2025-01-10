@@ -17,6 +17,7 @@
             if (decodedLink.startsWith('figma://')) {
                 setTimeout(function() {
                     window.location.href = decodedLink;
+                    // Try closing the tab
                     window.close(); // Attempt to close the window after the redirect
                 }, 1000); // Delay the redirection by 1 second
             } else {
