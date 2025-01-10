@@ -10,12 +10,17 @@
         const figmaLink = urlParams.get('figmaLink');
 
         if (figmaLink) {
-            // If the link starts with figma://, open the app
-            if (figmaLink.startsWith('figma://')) {
-                window.location.href = decodeURIComponent(figmaLink);
+            // Decode the figmaLink
+            const decodedLink = decodeURIComponent(figmaLink);
+
+            // If the link starts with figma://, attempt to open the app
+            if (decodedLink.startsWith('figma://')) {
+                setTimeout(function() {
+                    window.location.href = decodedLink;
+                }, 1000); // Delay the redirection by 1 second
             } else {
                 // Fallback for the web version of the Figma design
-                window.location.href = decodeURIComponent(figmaLink).replace('figma://', 'https://www.figma.com/');
+                window.location.href = decodedLink.replace('figma://', 'https://www.figma.com/');
             }
         } else {
             document.body.innerHTML = "<p>Invalid Figma link. Please check the URL.</p>";
