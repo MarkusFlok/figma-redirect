@@ -5,33 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting to Figma...</title>
     <script>
-        // Get the figmaLink query parameter
+        // Get the figmaLink query parameter from the URL
         const urlParams = new URLSearchParams(window.location.search);
         const figmaLink = urlParams.get('figmaLink');
 
         if (figmaLink) {
-            // Decode the figmaLink
+            // Decode the figmaLink (which may be URL-encoded)
             const decodedLink = decodeURIComponent(figmaLink);
-            
-            // Debugging: log the received link
-            console.log("Received Figma Link:", decodedLink);
 
-            // Check if the link starts with figma:// and try to redirect to the Figma app
+            // If the link starts with figma://, try to open the Figma app in a new tab
             if (decodedLink.startsWith('figma://')) {
-                console.log("Detected figma:// protocol. Redirecting to Figma app...");
-                
-                // Add a small delay before redirecting (to help with browser handling)
                 setTimeout(function() {
-                    window.location.href = decodedLink;
-                }, 1000); // 1-second delay
+                    // Open the figma:// link in a new tab
+                    window.open(decodedLink, '_blank');
+                }, 1000); // Delay the redirection by 1 second to ensure the link works
             } else {
-                // Debugging: log when not using the figma:// protocol
-                console.log("This is a web link. Redirecting to Figma website...");
-                window.location.href = decodedLink.replace('figma://', 'https://www.figma.com/');
+                // Fallback: Open the web version of the Figma design
+                setTimeout(function() {
+                    window.location.href = decodedLink.replace('figma://', 'https://www.figma.com/');
+                }, 1000);
             }
         } else {
-            // Log when the link parameter is missing
-            console.log("No Figma link provided in the URL.");
             document.body.innerHTML = "<p>Invalid Figma link. Please check the URL.</p>";
         }
     </script>
